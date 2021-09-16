@@ -70,6 +70,7 @@ export class UserListComponent implements OnInit {
   };
 
   cancel(){
+    this.isEditable = false;
     this.customerForm.reset();
   }
 
