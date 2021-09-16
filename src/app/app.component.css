@@ -1,0 +1,30 @@
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+label{
+  margin-bottom: 20px;
+  font-size: 12px ;
+}
+input:not(#rules) {
+  width: 200px;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #8181ea;
+  color: white;
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}

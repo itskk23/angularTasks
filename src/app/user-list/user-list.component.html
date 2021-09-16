@@ -1,0 +1,143 @@
+<div class="person-container">
+  <div class="eachPerson" *ngFor="let person of customers.customers; index as i">
+    <h1>User Number {{person.id}}</h1>
+    <p><span>Your Email</span> {{person.email}}</p>
+    <p><span>Your Nickname</span> {{person.nickname}}</p>
+    <p><span>Your password</span> {{person.passwordGroup.password}}</p>
+    <p><span>Your number </span>{{person.phoneNumber}}</p>
+    <p><span>Your website</span> {{person.website}}</p>
+    <div class="button-container">
+      <button (click)="setEdit(person.id)">Edit</button>
+      <button class="remove" (click)="setRemove(person.id)">Remove</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="form-container">
+  <form  [formGroup]="customerForm" autocomplete="off"  (ngSubmit)="save()">
+    <label for="email">E-mail :
+      <input type="email"
+             class="input"
+             id="email"
+             formControlName="email"
+             placeholder="Email Required">
+      <p class="validation">{{emailMessage}}</p>
+    </label>
+    <!--  <p>{{form.errors}}</p>-->
+    <div class="noname" formGroupName="passwordGroup">
+      <label for="password">
+        Password :
+        <input type="password"
+               class="input"
+               id="password"
+               formControlName="password"
+               placeholder="Password Required">
+        <p class="validation"> {{passwordMessage}}</p>
+
+      </label>
+
+      <label for="rePassword"> Confirm Password :
+
+        <input type="password"
+               class="input"
+               id="rePassword"
+               formControlName="rePassword">
+        <p class="validation"
+           *ngIf="customerForm.get('passwordGroup.rePassword').errors?.required
+        && customerForm.get('passwordGroup.rePassword').touched">
+          please Type password again
+        </p>
+        <p  class="validation"
+            *ngIf="customerForm.get('passwordGroup').errors?.match">
+          please match passwords
+        </p>
+      </label>
+      <br>
+      <br>
+    </div>
+
+    <label for="nickname"> Nickname :
+      <input type="text"
+             class="input"
+             id="nickname"
+             formControlName="nickname"
+             placeholder="Nickname Required">
+      <p class="validation"
+        *ngIf="customerForm.get('nickname').errors?.required
+         && customerForm.get('nickname').touched ">
+        Please enter your nickname
+      </p>
+      <p class="validation"
+        *ngIf="customerForm.get('nickname').errors?.pattern
+         && customerForm.get('nickname').touched ">
+        Please enter your valid neckname
+      </p>
+    </label>
+    <br>
+    <label for="phoneNumber"> Phone Number :
+      <input
+        id="phoneNumber"
+        class="input"
+        formControlName="phoneNumber"
+        placeholder="phone Required">
+      <p class="validation"
+        *ngIf="customerForm.get('phoneNumber').errors?.required
+         && customerForm.get('phoneNumber').touched ">
+        Please enter your phone Number
+      </p>
+      <p class="validation"
+        *ngIf="customerForm.get('phoneNumber').errors?.pattern
+         && customerForm.get('phoneNumber').touched ">
+        Please enter valid phone
+      </p>
+    </label>
+    <br>
+    <label for="website"> Website :
+      <input type="url"
+             class="input"
+             id="website"
+             formControlName="website"
+             placeholder="website Required">
+      <p class="validation"
+        *ngIf="customerForm.get('website').errors?.required
+         && customerForm.get('website').touched ">
+        Please enter your website
+      </p>
+      <p class="validation"
+        *ngIf="customerForm.get('website').errors?.pattern
+         && customerForm.get('website').touched ">
+        Please enter your valid website
+      </p>
+    </label>
+    <br>
+    <br>
+    <label for="rules">
+      <input type="checkbox"
+             id='rules'
+             formControlName="checkbox"
+
+      >
+      I have Read the agreement
+    </label>
+
+    <p class="validation"
+      *ngIf="customerForm.invalid && customerForm.touched"> Please enter valid inputs</p>
+    <div class="formButton-container">
+      <button
+        [disabled]="!customerForm.valid"
+      > Save</button>
+      <button
+        type="button"
+        (click)="cancel()"
+      > Cancel </button>
+    </div>
+
+
+  </form>
+</div>
+
+<!--<div *ngIf="isEditable">-->
+<!--  <app-person-edit></app-person-edit>-->
+<!--</div>-->
+

@@ -1,0 +1,90 @@
+/*div{*/
+/*  width: 400px;*/
+/*  height: 200px;*/
+/*  border: 2px solid red;*/
+/*}*/
+.person-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+.eachPerson{
+  border: 1px solid rgba(190, 210, 165, 0.87);
+  width: 300px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  background-color: rgba(190, 210, 165, 0.87);
+}
+
+.eachPerson p{
+  color: blue;
+}
+
+.eachPerson p span {
+  color: darkgreen;
+}
+
+button {
+  width: 100px;
+  height: 30px;
+  font-size: 18px;
+  font-weight: 900;
+  color: white;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+  background-color: #1ABC9C;
+  margin-left: 30px;
+  border-radius: 2.5px;
+  outline: none;
+  border:1px solid #1ABC9C;
+}
+
+.remove{
+  background-color: red;
+  border:1px solid red;
+}
+
+.form-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+form  {
+  background-color: #7d8cce;
+  border: 1px solid black;
+  width: 400px;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.input{
+  width: 400px;
+  height: 20px;
+  border-radius: 10px;
+}
+
+.formButton-container{
+  display: flex;
+}
+
+.formButton-container button{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.validation{
+  color:red;
+  font-size: 14px;
+}
+
