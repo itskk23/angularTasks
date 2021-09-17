@@ -77,11 +77,17 @@ export class UserListComponent implements OnInit {
   save() {
     if(!this.isEditable){
     this.customers.customers.push(this.customerForm.value);
-    this.customerForm.reset();
+      this.customerForm.reset();
+
+
   } else {
       this.customers.updatePerson(this.customerForm.value);
-      this.isEditable = !this.isEditable;
       this.customerForm.reset();
+      if(!this.customerForm.get('checkbox').value){
+        this.customerForm.get('checkbox').enable()
+      }
+      this.isEditable = !this.isEditable;
+
     }
   };
 
@@ -104,7 +110,11 @@ export class UserListComponent implements OnInit {
     this.isEditable = !this.isEditable;
     let filteredPerson = this.customers.getPersonById(param);
     this.customerForm.patchValue(filteredPerson);
-    this.customerForm.get('checkbox').disable()
+    if(this.customerForm.get('checkbox').value){
+      // console.log('kide disabled')
+      this.customerForm.get('checkbox').disable()
+    }
+
     //თურმე patchvalue არსებობს მე კიდე ფორმბილდს ახლიდან ვწერდი ხელით ხელით:))))
   }
 
