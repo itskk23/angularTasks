@@ -2,8 +2,9 @@
 <form [formGroup]="form">
   <select
     formControlName="selectIn"
+    (change)="moneyIn()"
   >
-    <option *ngFor="let currency of currencyArr" value="{{currency}}" ngValue="rame" >{{currency}}</option>
+    <option *ngFor="let currency of currencyArr" value="{{currency}}" ngValue="rame"  >{{currency}}</option>
   </select>
 
   <br>
@@ -18,7 +19,7 @@
 
   <br>
   <br>
-  <select formControlName="selectOut">
+  <select formControlName="selectOut" (change)="moneyOut()">
     <option *ngFor="let currency of currencyArr" value="{{currency}}" ngValue="rame" >{{currency}}</option>
   </select>
   <br>

@@ -15,48 +15,54 @@ export class ValutaRicoComponent implements OnInit {
   form: FormGroup;
   testArr: any[] = [];
   currencyArr: string[] = [
-    "CAD", "HKD", "ISK", "PHP", "DKK", "HUF",
-    "CZK", "GBP", "RON", "SEK", "IDR", "INR",
+    "USD", "EUR","GEL", "GBP", "CAD", "HKD", "ISK", "PHP", "DKK", "HUF",
+    "CZK",  "RON", "SEK", "IDR", "INR",
     "BRL", "RUB", "HRK", "JPY", "THB", "CHF",
-    "EUR", "MYR", "BGN", "TRY", "CNY", "NOK",
-    "NZD", "ZAR", "USD", "MXN", "SGD", "AUD",
-    "ILS", "KRW", "PLN", "GEL"
-  ]
+     "MYR", "BGN", "TRY", "CNY", "NOK",
+    "NZD", "ZAR",  "MXN", "SGD", "AUD",
+    "ILS", "KRW", "PLN",
+  ];
+  fromCountry: string = '';
+  toCountry: string = '';
   ngOnInit(): void {
     this.form = this.fb.group({
-      selectIn: ["CAD"],
-      selectOut: ["EUR"],
+      selectIn: ["USD"],
+      selectOut: ["GEL"],
       valueIn: [""],
       valueOut: [""]
     })
 
-  console.log(this.form.get('valueOut').value)
-
-
   }
 
-
   moneyIn(){
-    // this.form.get('valueOut').patchValue(this.valueIn * 2);
-    // console.log(this.selectOut)
     this.getHttp(this.selectIn)
   }
   moneyOut(){
-    // this.form.get('valueOut').patchValue(this.valueIn * 2);
-    // console.log(this.selectOut)
     this.getHttp(this.selectOut)
   }
   getHttp(fromExchange){
-    const cvladi = this.selectOut;
-    console.log(cvladi);
-    this.http.get(`https://api.fastforex.io/fetch-all?from=${fromExchange}&api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
-      map(value => value['results']),
-      tap(value => this.transform(value[cvladi]))
-    ).subscribe();
+    if(fromExchange === this.selectIn) {
+      var toExchange = this.selectOut;
+      this.http.get(`https://api.fastforex.io/fetch-all?from=${fromExchange}&api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
+        map(value => value['results']),
+        tap(value => this.transform(value[toExchange]))
+      ).subscribe();
+    } else{
+      var toExchange2 = this.selectIn;
+      this.http.get(`https://api.fastforex.io/fetch-all?from=${fromExchange}&api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
+        map(value =>value['results']),
+        tap(value => this.transformBackwards(value[toExchange2]))
+      ).subscribe();
+    }
+
   };
 
   transform(exchangeRate) {
     this.form.get('valueOut').patchValue(this.valueIn * exchangeRate);
+  }
+
+  transformBackwards(exchangeRate) {
+    this.form.get('valueIn').patchValue(this.valueOut * exchangeRate);
   }
 
   get valueOut(){
@@ -68,7 +74,6 @@ export class ValutaRicoComponent implements OnInit {
   get selectIn(){
     return this.form.get("selectIn").value
   }
-
   get selectOut(){
     return this.form.get("selectOut").value
   }
