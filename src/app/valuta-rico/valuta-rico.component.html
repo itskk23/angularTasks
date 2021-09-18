@@ -1,0 +1,32 @@
+<p>valuta-rico works!</p>
+<form [formGroup]="form">
+  <select
+    formControlName="selectIn"
+  >
+    <option *ngFor="let currency of currencyArr" value="{{currency}}" ngValue="rame" >{{currency}}</option>
+  </select>
+
+  <br>
+  <input
+    type="number"
+    placeholder="pirveli"
+    value="rame"
+    formControlName="valueIn"
+    (input)="moneyIn()"
+  >
+  <button>Add</button>
+
+  <br>
+  <br>
+  <select formControlName="selectOut">
+    <option *ngFor="let currency of currencyArr" value="{{currency}}" ngValue="rame" >{{currency}}</option>
+  </select>
+  <br>
+  <br>
+  <input
+    type="number"
+    placeholder="meore"
+    formControlName="valueOut"
+    (input)="moneyOut()"
+  >
+</form>
