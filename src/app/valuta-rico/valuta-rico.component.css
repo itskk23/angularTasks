@@ -1,0 +1,38 @@
+.form-container{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.input-container > div{
+  margin-bottom: 20px;
+}
+
+input {
+  width: 200px;
+  height: 32px;
+  border-top-right-radius: 33px;
+  border-bottom-right-radius: 33px;
+  outline: none;
+  border: 1px solid grey;
+  padding-left: 20px;
+}
+
+button {
+  margin-bottom: 10px;
+  border-radius: 33px;
+  border: 1px solid #008CBA;;
+  height: 32px;
+  background: transparent;
+  cursor: pointer;
+  width: 50px;
+  color: #008CBA;
+}
+
+select {
+  height: 36px;
+  border-top-left-radius: 33px;
+  border-bottom-left-radius: 33px;
+  border: 1px solid grey;
+  padding-left: 5px;
+}

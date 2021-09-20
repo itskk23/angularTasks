@@ -1,33 +1,23 @@
 <p>valuta-rico works!</p>
-<form [formGroup]="form">
-  <select
-    formControlName="selectIn"
-    (change)="moneyIn()"
-  >
-    <option *ngFor="let currency of currencyArr" value="{{currency}}" ngValue="rame"  >{{currency}}</option>
-  </select>
+<form class="form-container" [formGroup]="form">
 
-  <br>
-  <input
-    type="number"
-    placeholder="pirveli"
-    value="rame"
-    formControlName="valueIn"
-    (input)="moneyIn()"
-  >
-  <button>Add</button>
+  <button (click)="addCurrency()">Add </button>
+  <div class="input-container" formArrayName="currencies">
 
-  <br>
-  <br>
-  <select formControlName="selectOut" (change)="moneyOut()">
-    <option *ngFor="let currency of currencyArr" value="{{currency}}" ngValue="rame" >{{currency}}</option>
-  </select>
-  <br>
-  <br>
-  <input
-    type="number"
-    placeholder="meore"
-    formControlName="valueOut"
-    (input)="moneyOut()"
-  >
+    <div *ngFor="let currency of allCurrencies.controls; index as i" >
+      <div [formGroupName]="i">
+        <select name="firstCurrency" formControlName="selectIn">
+          <option *ngFor="let curr of currencyNames" [value]="curr">{{curr}}</option>
+        </select>
+        <input type="number" formControlName="valueIn" placeholder="enter amount" required onkeydown="return event.keyCode !== 69">
+      </div>
+    </div>
+  </div>
+
+  <div class="output-container">
+    <select name="secondCurrency" formControlName="selectOut">
+      <option *ngFor="let curr of currencyNames" [value]="curr">{{curr}}</option>
+    </select>
+    <input type="number" formControlName="valueOut"  placeholder="enter amount" required onkeydown="return event.keyCode !== 69">
+  </div>
 </form>

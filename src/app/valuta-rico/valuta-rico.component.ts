@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {map, tap} from "rxjs/operators";
-// import * as http from "http";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-valuta-rico',
@@ -10,72 +9,77 @@ import {map, tap} from "rxjs/operators";
   styleUrls: ['./valuta-rico.component.css']
 })
 export class ValutaRicoComponent implements OnInit {
+  form
+  currencyNames: string[] = []
+  sum: number = 0
 
-  constructor(private  http: HttpClient, private fb: FormBuilder) { }
-  form: FormGroup;
-  testArr: any[] = [];
-  currencyArr: string[] = [
-    "USD", "EUR","GEL", "GBP", "CAD", "HKD", "ISK", "PHP", "DKK", "HUF",
-    "CZK",  "RON", "SEK", "IDR", "INR",
-    "BRL", "RUB", "HRK", "JPY", "THB", "CHF",
-     "MYR", "BGN", "TRY", "CNY", "NOK",
-    "NZD", "ZAR",  "MXN", "SGD", "AUD",
-    "ILS", "KRW", "PLN",
-  ];
-  fromCountry: string = '';
-  toCountry: string = '';
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.form = this.fb.group({
-      selectIn: ["USD"],
-      selectOut: ["GEL"],
-      valueIn: [""],
-      valueOut: [""]
+      currencies: this.fb.array([this.fb.group({
+        selectIn: ['USD'],
+        valueIn: [0],
+      })]),
+      selectOut: ['GEL'],
+      valueOut: [0],
     })
+  }
+
+  ngOnInit(): void {
+    this.http.get(`https://api.fastforex.io/currencies?api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
+      tap((value: any) => {
+          this.currencyNames = Object.keys(value.currencies)
+        }
+      )
+    ).subscribe()
+    this.form.get('currencies')?.valueChanges.pipe(
+      tap( (value:any) => {
+          for (let i = 0; i < value.length; i++){
+            this.convertCurrency(value[i]?.selectIn, value[i].valueIn)
+          }
+        }
+      )
+    ).subscribe();
+    this.selectOut?.valueChanges?.pipe(
+      tap( (value) => {
+          let currencyArr = this.form.get('currencies')?.value
+          for (let i = 0; i < currencyArr.length; i++){
+            this.convertCurrency(currencyArr[i]?.selectIn, currencyArr[i].valueIn)
+          }
+        }
+      )
+    ).subscribe();
 
   }
 
-  moneyIn(){
-    this.getHttp(this.selectIn)
-  }
-  moneyOut(){
-    this.getHttp(this.selectOut)
-  }
-  getHttp(fromExchange){
-    if(fromExchange === this.selectIn) {
-      var toExchange = this.selectOut;
-      this.http.get(`https://api.fastforex.io/fetch-all?from=${fromExchange}&api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
-        map(value => value['results']),
-        tap(value => this.transform(value[toExchange]))
-      ).subscribe();
-    } else{
-      var toExchange2 = this.selectIn;
-      this.http.get(`https://api.fastforex.io/fetch-all?from=${fromExchange}&api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
-        map(value =>value['results']),
-        tap(value => this.transformBackwards(value[toExchange2]))
-      ).subscribe();
-    }
-
-  };
-
-  transform(exchangeRate) {
-    this.form.get('valueOut').patchValue(this.valueIn * exchangeRate);
+  newCurrency(): FormGroup {
+    return this.fb.group({
+      selectIn: ['USD'],
+      valueIn: [0],
+    })
   }
 
-  transformBackwards(exchangeRate) {
-    this.form.get('valueIn').patchValue(this.valueOut * exchangeRate);
+  convertCurrency(currency: string, amount: number) {
+    this.sum = 0;
+    this.http.get(`https://api.fastforex.io/fetch-one?from=${currency}&to=${this.selectOut}&api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
+      tap( (value: any) => {
+          this.sum += amount * value.result[`${this.selectOut}`]
+          this.form.get('valueOut')?.setValue(this.sum, {emitEvent: false, onlySelf: true})
+        }
+      )
+    ).subscribe()
   }
 
-  get valueOut(){
-    return this.form.get("valueOut").value
+  addCurrency() {
+    this.allCurrencies.push(this.newCurrency());
   }
-  get valueIn(){
-    return this.form.get("valueIn").value
+
+  get allCurrencies() : FormArray {
+    return this.form.get("currencies") as FormArray
   }
-  get selectIn(){
-    return this.form.get("selectIn").value
-  }
+
   get selectOut(){
-    return this.form.get("selectOut").value
+    return this.form.get('selectOut')?.value
   }
-
 }
+
+
