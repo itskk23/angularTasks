@@ -44,14 +44,22 @@
 }
 
 
+.form-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .form-container{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 500px;
-  border: 1px solid black;
+  background-color: #7FDBFF;
   margin-top: 10px;
+  height:400px;
+  color: #0731e7;
 
 }
 
@@ -77,4 +85,19 @@
 .cancelButton{
   background-color: #f0ad4e;
   border-color: #f0ad4e;
+}
+
+.page-landing{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.page-landing button{
+  margin-right: 20px;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 23px;
+  width: 150px;
 }

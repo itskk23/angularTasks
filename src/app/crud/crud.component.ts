@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EmployeesService, User} from "./employees.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-crud',
@@ -9,9 +10,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class CrudComponent implements OnInit {
   employeesArray$ = [];
+  paginationArr= [];
   currentUser;
   form: FormGroup;
   isEditable: Boolean = false;
+  count: number = 0;
 
   constructor(private myService: EmployeesService, private fb: FormBuilder) {
   }
@@ -26,8 +29,28 @@ export class CrudComponent implements OnInit {
     this.getAllUsers();
   }
 
+  nextPage(){
+    if(this.count + 1 > this.employeesArray$.length / 5){
+      alert('this is the last page')
+    } else {
+      this.getAllUsers();
+      this.count++
+    }
+  }
+
+  prevPage(){
+    this.getAllUsers();
+    if(this.count === 0) {
+      alert('this is the first page, mon ami!')
+    } else {
+      this.count--;
+    }
+  }
+
   getAllUsers() {
-    this.myService.getAllEmployees().subscribe(value => this.employeesArray$ = value);
+    this.myService.getAllEmployees().pipe(
+      tap(value => this.employeesArray$ = value),
+      tap(value => this.paginationArr = value.slice(this.count * 5, this.count * 5  + 5))).subscribe()
   }
 
   onEdit(value) {
@@ -56,4 +79,3 @@ export class CrudComponent implements OnInit {
     this.myService.deleteEmployee(value).subscribe(value1 => this.getAllUsers());
   }
 }
-

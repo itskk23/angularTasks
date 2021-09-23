@@ -1,11 +1,11 @@
 {
   "data": [
     {
-      "id": 1,
       "employee_name": "Luka CHitaishvili",
+      "employee_age": "20",
       "employee_salary": 6000,
-      "employee_age": 33,
-      "profile_image": ""
+      "employee_id": 1,
+      "id": 1
     },
     {
       "id": 2,
@@ -14,9 +14,10 @@
       "employee_age": 33,
       "profile_image": ""
     },
-    {  "id": 3,
+    {
+      "id": 3,
       "employee_name": "Kendriki Lamari ",
-      "employee_salary": 11100  ,
+      "employee_salary": 11100,
       "employee_age": 111,
       "profile_image": ""
     },

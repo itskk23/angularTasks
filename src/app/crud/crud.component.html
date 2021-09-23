@@ -1,13 +1,5 @@
-<p>crud works!</p>
-
-
-<br>
-
-
-
-
 <div class="user-container">
-  <div class="user-item" *ngFor="let user of this.employeesArray$; index as i">
+  <div class="user-item" *ngFor="let user of this.paginationArr; index as i">
     <p>Employee's name is: <span>{{user.employee_name}}</span> </p>
     <p>Employee's age is: <span>{{user.employee_age}}</span></p>
     <p>Employee's salary is: <span>{{user.employee_salary}}</span> </p>
@@ -15,18 +7,34 @@
       <button class="editButton" (click)="onEdit(user.id)">Edit User</button>
       <button class="removeButton" (click)="onRemove(user.id)">Remove User</button>
     </div>
-
   </div>
 </div>
+<br>
 
-<form [formGroup]="form" class="form-container">
-  <input type="text" formControlName="employee_name">
-  <input type="text" formControlName="employee_age">
-  <input type="text" formControlName="employee_salary">
-  <div class="button-container">
-    <button class="editButton" [disabled]="!form.valid" (click)="addUser()">SAVE</button>
-    <button class="cancelButton">Cancel</button>
-  </div>
+<div class="page-landing">
+  <button class="landing-button editButton" (click)="prevPage()">Previous Page</button>
+  <button class="landing-button editButton" (click)="nextPage()">Next Page</button>
+</div>
 
-</form>
+<br>
+<div class="form-wrapper">
+  <form [formGroup]="form" class="form-container">
+    <label for="name">Enter Name
+      <input id="name" type="text" formControlName="employee_name">
+    </label>
+    <label for="age">Enter Age
+      <input id="age" type="text" formControlName="employee_age">
+    </label>
+    <label for="salary"> Enter Salary
+      <input id="salary" type="text" formControlName="employee_salary">
+    </label>
+
+    <div class="button-container">
+      <button class="editButton" [disabled]="!form.valid" (click)="addUser()">SAVE</button>
+      <button class="cancelButton">Cancel</button>
+    </div>
+
+  </form>
+</div>
+
 
