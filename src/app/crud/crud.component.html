@@ -13,7 +13,7 @@
     <p>Employee's salary is: <span>{{user.employee_salary}}</span> </p>
     <div class="button-container">
       <button class="editButton" (click)="onEdit(user.id)">Edit User</button>
-      <button class="removeButton">Remove User</button>
+      <button class="removeButton" (click)="onRemove(user.id)">Remove User</button>
     </div>
 
   </div>
