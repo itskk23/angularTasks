@@ -1,0 +1,44 @@
+.user-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.user-item{
+  width: 280px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /*box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0)*/
+  box-shadow: inset -1px 3px 8px 5px #1F87FF, 2px 5px 16px 0px #0B325E, 5px 5px 15px 5px rgba(0,0,0,0);
+  margin-bottom: 10px;
+}
+
+.user-item p span{
+  font-weight: bold;
+}
+.button-container{
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.button-container button {
+  font-size: 14px;
+  color: white;
+  border-radius: 4px;
+  line-height: 1.42857143;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.editButton{
+  background-color: #337ab7;
+  border: 1px solid #337ab7;
+}
+
+.removeButton{
+  background-color: #d9534f;
+  border: 1px solid #d9534f;
+}

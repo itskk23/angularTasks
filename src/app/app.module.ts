@@ -7,12 +7,15 @@ import { UserListComponent } from './user-list/user-list.component';
 import {Customer} from "./user-list/customer";
 import {ValutaRicoComponent} from './valuta-rico/valuta-rico.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CrudComponent } from './crud/crud.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent,
-    ValutaRicoComponent
+    ValutaRicoComponent,
+    CrudComponent
+
   ],
   imports: [
     BrowserModule,
