@@ -1,11 +1,5 @@
 <p>crud works!</p>
-<form [formGroup]="form">
-  <input type="text" formControlName="employee_name">
-  <input type="text" formControlName="employee_age">
-  <input type="text" formControlName="employee_salary">
-  <button [disabled]="!form.valid" (click)="addUser()">SAVE</button>
-  <button>Cancel</button>
-</form>
+
 
 <br>
 
@@ -24,4 +18,15 @@
 
   </div>
 </div>
+
+<form [formGroup]="form" class="form-container">
+  <input type="text" formControlName="employee_name">
+  <input type="text" formControlName="employee_age">
+  <input type="text" formControlName="employee_salary">
+  <div class="button-container">
+    <button class="editButton" [disabled]="!form.valid" (click)="addUser()">SAVE</button>
+    <button class="cancelButton">Cancel</button>
+  </div>
+
+</form>
 

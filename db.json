@@ -1,11 +1,11 @@
 {
   "data": [
     {
-      "id": 1,
-      "employee_name": "Tiger Nixon",
-      "employee_salary": 320800,
+      "employee_name": "2",
       "employee_age": 61,
-      "profile_image": ""
+      "employee_salary": 320800,
+      "employee_id": 1,
+      "id": 1
     },
     {
       "id": 2,
@@ -167,12 +167,6 @@
       "employee_salary": 85600,
       "employee_age": 23,
       "profile_image": ""
-    },
-    {
-      "employee_name": "1",
-      "employee_age": "1",
-      "employee_salary": "1",
-      "id": 25
     }
   ]
 }

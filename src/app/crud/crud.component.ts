@@ -11,15 +11,17 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class CrudComponent implements OnInit {
   employeesArray$ = [];
+  currentUser;
   form: FormGroup;
+  isEditable:Boolean =  false;
   constructor( private myService: EmployeesService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
       employee_name: ['', Validators.required],
       employee_age: ['', Validators.required],
-      employee_salary: ['', Validators.required]
-      // employee_id: []
+      employee_salary: ['', Validators.required],
+      employee_id: []
     })
 this.getAllUsers();
 
@@ -30,19 +32,27 @@ this.getAllUsers();
   }
 
   onEdit(value){
+    this.isEditable = true;
     this.myService.getEmployeeById(value).subscribe(value=> {
       this.form.get('employee_name').patchValue(value['employee_name'], Validators.required);
       this.form.get('employee_age').patchValue(value['employee_age'], Validators.required);
       this.form.get('employee_salary').patchValue(value['employee_salary'], Validators.required);
-      // this.form.get('employee_id').patchValue(value['id'])
+      this.form.get('employee_id').patchValue(value['id'])
     })
   }
 
   addUser(){
+    if(this.isEditable){
+      this.myService.updateEmployee(this.form.get('employee_id').value, this.form.getRawValue()).subscribe();
+      this.getAllUsers();
+      this.form.reset()
+    } else{
+      this.myService.addEmployee(this.form.getRawValue()).subscribe();
+      this.getAllUsers();
+      this.form.reset()
+    }
 
-    this.myService.addEmployee(this.form.getRawValue()).subscribe(value => console.log(value));
-    this.getAllUsers();
-    this.form.reset()
+
 
   }
 }
