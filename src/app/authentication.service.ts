@@ -12,9 +12,9 @@ export class AuthenticationService {
   }
 
   auth(username: string, password: string) {
-    this.http.get<User[]>('http://localhost:3000/users').pipe(
+    this.http.get<User[]>('http://localhost:3000/data').pipe(
       tap((users: User[]) => {
-          const user = users.filter(u => u.username === username && u.password === password)[0];
+          const user = users.filter(u => u.employee_name === username && u.password === password)[0];
           if(user){
             localStorage.setItem('token', user.token);
             this.router.navigateByUrl('list')
@@ -30,7 +30,8 @@ export class AuthenticationService {
 
 
 export interface User {
-  username: string,
+
+  employee_name: string,
   password: string,
   token: string
 }

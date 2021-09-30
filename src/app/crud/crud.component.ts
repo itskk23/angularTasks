@@ -58,19 +58,32 @@ export class CrudComponent implements OnInit {
 
   onEdit(value) {
     this.isEditable = true;
-    this.myService.getEmployeeById(value).subscribe(value => {
-      this.form.get('employee_name').patchValue(value['employee_name'], Validators.required);
-      this.form.get('employee_age').patchValue(value['employee_age'], Validators.required);
-      this.form.get('employee_salary').patchValue(value['employee_salary'], Validators.required);
-      this.form.get('employee_id').patchValue(value['id'])
-    })
+    const token = localStorage.getItem('token');
+    const letFind = this.paginationArr.find(user => user.token === token);
+    if(letFind.id === value){
+      this.myService.getEmployeeById(value).subscribe(value => {
+        this.form.get('employee_name').patchValue(value['employee_name'], Validators.required);
+        this.form.get('employee_age').patchValue(value['employee_age'], Validators.required);
+        this.form.get('employee_salary').patchValue(value['employee_salary'], Validators.required);
+        this.form.get('employee_id').patchValue(value['id'])
+      })
+    }
+
   }
 
   addUser() {
     if (this.isEditable) {
-      this.isEditable = false;
-      this.myService.updateEmployee(this.form.get('employee_id').value, this.form.getRawValue()).subscribe(value => this.getAllUsers());
-      this.form.reset();
+      const token = localStorage.getItem('token');
+      const letFind = this.paginationArr.find(user => user.token === token);
+      if(letFind.id === this.form.get('employee_id').value){
+        letFind.employee_age =  this.form.get('employee_age').value;
+        letFind.employee_name =  this.form.get('employee_name').value;
+        letFind.employee_salary = this.form.get('employee_salary').value;
+        this.isEditable = false;
+        this.myService.updateEmployee(this.form.get('employee_id').value, letFind).subscribe(value => this.getAllUsers());
+        this.form.reset();
+        }
+
     } else {
       this.myService.addEmployee(this.form.getRawValue()).subscribe(value => this.getAllUsers());
       this.form.reset()
@@ -78,7 +91,14 @@ export class CrudComponent implements OnInit {
   }
 
   onRemove(value){
-    this.myService.deleteEmployee(value).subscribe(value1 => this.getAllUsers());
+    const token = localStorage.getItem('token');
+    const letFind = this.paginationArr.find(user => user.token === token);
+    if(letFind.id === value){
+      this.myService.deleteEmployee(value).subscribe(value1 => this.getAllUsers());
+      localStorage.clear()
+    }
+
+
   }
 
   logOut(){
