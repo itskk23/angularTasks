@@ -1,3 +1,4 @@
+<Button (click)="logOut()">Log out</Button>
 <div class="user-container">
   <div class="user-item" *ngFor="let user of this.paginationArr; index as i">
     <p>Employee's name is: <span>{{user.employee_name}}</span> </p>
@@ -35,6 +36,7 @@
     </div>
 
   </form>
+
 </div>
 
 

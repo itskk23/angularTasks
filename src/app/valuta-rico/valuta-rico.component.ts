@@ -25,7 +25,7 @@ export class ValutaRicoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get(`https://api.fastforex.io/currencies?api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
+    this.http.get(`https://api.fastforex.io/currencies?api_key=ebdf6ea3dd-c5af28a67d-r08m7s`).pipe(
       tap((value: any) => {
           this.currencyNames = Object.keys(value.currencies)
         }
@@ -60,7 +60,7 @@ export class ValutaRicoComponent implements OnInit {
 
   convertCurrency(currency: string, amount: number) {
     this.sum = 0;
-    this.http.get(`https://api.fastforex.io/fetch-one?from=${currency}&to=${this.selectOut}&api_key=a19718ddc9-0b6657933e-qzl561`).pipe(
+    this.http.get(`https://api.fastforex.io/fetch-one?from=${currency}&to=${this.selectOut}&api_key=ebdf6ea3dd-c5af28a67d-r08m7s`).pipe(
       tap( (value: any) => {
           this.sum += amount * value.result[`${this.selectOut}`]
           this.form.get('valueOut')?.setValue(this.sum, {emitEvent: false, onlySelf: true})

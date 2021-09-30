@@ -168,5 +168,12 @@
       "employee_id": 24,
       "id": 24
     }
+  ],
+  "users": [
+    {
+      "username": "user1",
+      "password": "123",
+      "token": "airngurgnrionirnb"
+    }
   ]
 }

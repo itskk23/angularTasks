@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EmployeesService, User} from "./employees.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {tap} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-crud',
@@ -16,7 +17,9 @@ export class CrudComponent implements OnInit {
   isEditable: Boolean = false;
   count: number = 0;
 
-  constructor(private myService: EmployeesService, private fb: FormBuilder) {
+  constructor(private myService: EmployeesService,
+              private fb: FormBuilder,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -68,7 +71,6 @@ export class CrudComponent implements OnInit {
       this.isEditable = false;
       this.myService.updateEmployee(this.form.get('employee_id').value, this.form.getRawValue()).subscribe(value => this.getAllUsers());
       this.form.reset();
-
     } else {
       this.myService.addEmployee(this.form.getRawValue()).subscribe(value => this.getAllUsers());
       this.form.reset()
@@ -77,5 +79,11 @@ export class CrudComponent implements OnInit {
 
   onRemove(value){
     this.myService.deleteEmployee(value).subscribe(value1 => this.getAllUsers());
+  }
+
+  logOut(){
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('').then();
+
   }
 }
