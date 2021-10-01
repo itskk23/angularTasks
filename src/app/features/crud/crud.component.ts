@@ -27,7 +27,9 @@ export class CrudComponent implements OnInit {
       employee_name: ['', Validators.required],
       employee_age: ['', Validators.required],
       employee_salary: ['', Validators.required],
-      employee_id: []
+      employee_id: [],
+      email: ['aq@gmail.com'],
+      password: ['aqaqaqaaqq']
     })
     this.getAllUsers();
   }

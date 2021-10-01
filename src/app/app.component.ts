@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators, ValidationErrors} from "@angular/forms";
-import {UserListComponent} from "./user-list/user-list.component";
+import {UserListComponent} from "./features/user-list/user-list.component";
 import {tap} from "rxjs/operators";
-import {ConfirmedValidator} from './confirmed.validator';
+import {ConfirmedValidator} from './core/validators/confirmed.validator';
 
 @Component({
   selector: 'app-root',

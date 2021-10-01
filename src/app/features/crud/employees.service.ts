@@ -17,7 +17,7 @@ export class EmployeesService {
     return this.http.get<User[]>(`http://localhost:3000/data/${id}`)
   }
   addEmployee(user: User[]): Observable<User[]> {
-    return this.http.post<User[]>(`http://localhost:3000/data/`, user)
+    return this.http.post<User[]>(`http://localhost:3000/data`, user)
   }
   updateEmployee(id:number, user: User[]): Observable<User[]> {
     return this.http.put<User[]>(`http://localhost:3000/data/${id}`, user)
