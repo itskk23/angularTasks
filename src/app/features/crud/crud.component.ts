@@ -58,6 +58,11 @@ export class CrudComponent implements OnInit {
       tap(value => this.paginationArr = value.slice(this.count * 5, this.count * 5  + 5))).subscribe()
   }
 
+  cancelUser(){
+    console.log(this.form.value)
+    this.form.reset()
+  }
+
   onEdit(value) {
     this.isEditable = true;
     const token = localStorage.getItem('token');

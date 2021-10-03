@@ -5,9 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserListComponent } from './features/user-list/user-list.component';
 import {Customer} from "./features/user-list/customer";
-import {ValutaRicoComponent} from './features/valuta-rico/valuta-rico.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CrudComponent } from './features/crud/crud.component';
 import {RouterModule} from "@angular/router";
 import { LoginComponent } from './auth/login/login.component';
 import {LoginGuard} from "./auth/guards/login.guard";
@@ -19,9 +17,7 @@ import {AuthModule} from "./auth/auth.module";
   declarations: [
     AppComponent,
     UserListComponent,
-    ValutaRicoComponent,
-    CrudComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,11 +26,15 @@ import {AuthModule} from "./auth/auth.module";
     HttpClientModule,
     AuthModule,
     RouterModule.forRoot([
+      //ლოგინ მოდულს აღარ გავუკეთე ლეიზი ლოუდი. რაც შეეხება იუზერ-ლისტს, ძველი დავალებაა ეგ და აზრი არ ჰქონდა შევეშვი
       {path: 'list',
-        component: CrudComponent,
-        canActivate: [LoginGuard]
+        canActivate: [LoginGuard],
+        loadChildren: () => import('./features/crud/crud.module').then(m => m.CrudModule)
       },
-      {path: 'valuta', component: ValutaRicoComponent},
+      {path: 'user-list',
+      component: UserListComponent},
+      {path: 'valuta',
+        loadChildren: () => import('./features/valuta-rico/valute.module').then(m => m.ValuteModule),},
       {path: 'login',
         component: LoginComponent,
         canActivate: [LogoutGuard]},
