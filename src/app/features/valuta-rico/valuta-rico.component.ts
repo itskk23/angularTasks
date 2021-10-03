@@ -48,6 +48,10 @@ export class ValutaRicoComponent implements OnInit {
         }
       )
     ).subscribe();
+    this.form.get('valueOut')?.valueChanges.pipe(
+      tap(value => this.convertReverce(value, this.selectOut))
+    ).subscribe();
+
 
   }
 
@@ -64,6 +68,16 @@ export class ValutaRicoComponent implements OnInit {
       tap( (value: any) => {
           this.sum += amount * value.result[`${this.selectOut}`]
           this.form.get('valueOut')?.setValue(this.sum, {emitEvent: false, onlySelf: true})
+        }
+      )
+    ).subscribe()
+  }
+
+  convertReverce(amount, currency){
+    this.http.get(`https://api.fastforex.io/fetch-one?from=${currency}&to=${this.form.get('currencies').value[0].selectIn}&api_key=ebdf6ea3dd-c5af28a67d-r08m7s`).pipe(
+      tap( (value: any) => {
+        this.form.get('currencies').controls[0].setValue({selectIn: this.form.get('currencies').value[0].selectIn,
+          valueIn:  value.result[`${this.form.get('currencies').value[0].selectIn}`]},  {emitEvent: false, onlySelf: true})
         }
       )
     ).subscribe()
